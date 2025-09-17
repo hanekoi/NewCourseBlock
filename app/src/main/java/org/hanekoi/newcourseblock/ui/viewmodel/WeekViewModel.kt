@@ -6,8 +6,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
 import org.hanekoi.newcourseblock.ui.uistate.WeekUiState
+import java.time.DayOfWeek
+import java.time.LocalDate
 
 class WeekViewModel: ViewModel() {
+    val today: LocalDate = LocalDate.now()
+    val weekDates: List<LocalDate> = run {
+        val monday = today.with(DayOfWeek.MONDAY)
+        (0..6).map { monday.plusDays(it.toLong()) }
+    }
+
     private val _uiState = MutableStateFlow( // 用于修改
         LocalCoursesDataProvider.defaultWeekUiState
     )

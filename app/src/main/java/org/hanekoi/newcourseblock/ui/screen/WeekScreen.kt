@@ -1,6 +1,5 @@
 package org.hanekoi.newcourseblock.ui.screen
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -20,7 +19,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -45,7 +43,9 @@ import org.hanekoi.newcourseblock.R
 import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
 import org.hanekoi.newcourseblock.ui.uistate.WeekUiState
-import javax.xml.validation.ValidatorHandler
+import org.hanekoi.newcourseblock.utils.getFormattedTime
+import org.hanekoi.newcourseblock.utils.periods
+import java.time.LocalDate
 
 @Composable
 fun WeekScreen(
@@ -58,6 +58,9 @@ fun WeekScreen(
         modifier = modifier.fillMaxSize()
     ) {
         WeekScreenTopBar(
+            todayDate = uiState.todayDate,
+            weekDates = uiState.weekDates,
+            currentWeek = uiState.currentWeek,
             columns = uiState.columns
         )
         Row(
@@ -88,6 +91,7 @@ fun WeekScreen(
                     columns = uiState.columns,
                     rows = uiState.rows,
                     width = maxWidth,
+                    currentWeek = uiState.currentWeek,
                     height = maxHeight,
                 )
             }
@@ -100,15 +104,17 @@ fun WeekScreen(
  */
 @Composable
 private fun WeekScreenTopBar(
-    // TODO: uiState 传递当前日期
     columns: Int,
+    currentWeek: Int,
+    todayDate: LocalDate,
+    weekDates: List<LocalDate>,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxWidth()
-            .height(32.dp)
+            .height(40.dp)
     ) {
         val days = stringArrayResource(R.array.week_days)
 
@@ -117,18 +123,35 @@ private fun WeekScreenTopBar(
                 // TODO: 动态确定宽度
                 .width(40.dp) // 固定宽度以和侧栏匹配
                 .fillMaxHeight(),
-        )
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = currentWeek.toString(),
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
         // TODO: 不显示周末
         for(i in 0 until columns) {
-            Box(
+            val isToday = todayDate == weekDates[i]
+            val backgroundColor = if (isToday) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
+            val textColor = if (isToday) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground
+            Column(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxHeight(),
-                contentAlignment = Alignment.Center
+                    .fillMaxHeight()
+                    .background(backgroundColor),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = days[i],
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
+                    color = textColor
+                )
+                Text(
+                    text = "${weekDates[i].monthValue}/${weekDates[i].dayOfMonth}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = textColor
                 )
             }
         }
@@ -161,13 +184,13 @@ private fun WeekScreenSideBar(
                         .align(Alignment.CenterHorizontally)
                 )
                 Text(
-                    text = times[i*2],
+                    text = periods[i].first.getFormattedTime(),
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                 )
                 Text(
-                    text = times[i*2+1],
+                    text = periods[i].second.getFormattedTime(),
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
@@ -290,6 +313,7 @@ private fun WeekScreenCourses(
     height: Dp,
     columns: Int,
     rows: Int,
+    currentWeek: Int,
     modifier: Modifier = Modifier
 ) {
     val cellWidth = width / columns
@@ -308,26 +332,28 @@ private fun WeekScreenCourses(
     ) {
         // 创建课程卡片
         courses.forEach { course ->
-            course.times.forEach { time ->
-                val offsetX = cellWidth * (time.day - 1)
-                val offsetY = cellHeight * (time.start - 1)
-                val duration = time.end - time.start + 1
+            course.times.forEach  { time ->
+                if(currentWeek in time.weeks) {
+                    val offsetX = cellWidth * (time.day - 1)
+                    val offsetY = cellHeight * (time.start - 1)
+                    val duration = time.end - time.start + 1
 
-                WeekScreenCourseCard(
-                    name = course.name,
-                    location = course.location,
-                    modifier = Modifier
-                        .offset(offsetX, offsetY)
-                        .width(cellWidth)
-                        .height(cellHeight * duration)
-                        .pointerInput(Unit) { // 监测长按
-                            detectTapGestures (
-                                onLongPress = {
-                                    selectedCourse = course
-                                }
-                            )
-                        }
-                )
+                    WeekScreenCourseCard(
+                        name = course.name,
+                        location = course.location,
+                        modifier = Modifier
+                            .offset(offsetX, offsetY)
+                            .width(cellWidth)
+                            .height(cellHeight * duration)
+                            .pointerInput(Unit) { // 监测长按
+                                detectTapGestures (
+                                    onLongPress = {
+                                        selectedCourse = course
+                                    }
+                                )
+                            }
+                    )
+                }
             }
         }
     }
