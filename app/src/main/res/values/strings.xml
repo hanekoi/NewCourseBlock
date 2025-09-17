@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">NewCourseBlock</string>
+
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="me">Me</string>
+
+    <string-array name="week_days">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
+
+    <string-array name="course_times">
+        <item>8:00</item>
+        <item>8:45</item>
+        <item>8:55</item>
+        <item>9:40</item>
+        <item>10:00</item>
+        <item>10:45</item>
+        <item>10:55</item>
+        <item>11:40</item>
+        <item>12:00</item>
+        <item>12:45</item>
+        <item>12:55</item>
+        <item>13:40</item>
+        <item>14:00</item>
+        <item>14:45</item>
+        <item>14:55</item>
+        <item>15:40</item>
+        <item>16:00</item>
+        <item>16:45</item>
+        <item>16:55</item>
+        <item>17:40</item>
+        <item>18:00</item>
+        <item>18:45</item>
+        <item>18:55</item>
+        <item>19:40</item>
+        <item>20:00</item>
+        <item>20:45</item>
+        <item>20:55</item>
+        <item>21:40</item>
+    </string-array>
+</resources>
