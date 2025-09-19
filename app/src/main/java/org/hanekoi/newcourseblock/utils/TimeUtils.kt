@@ -14,8 +14,11 @@ val getWeekDates:() -> List<LocalDate> = {
     }
 }
 
-fun LocalTime.getFormattedTime():String =
+fun LocalTime.getFormattedTime(): String =
     format(DateTimeFormatter.ofPattern("HH:mm"))
+
+fun LocalDate.getFormattedDate(): String =
+    format(DateTimeFormatter.ofPattern("M/dd"))
 
 val periods: List<Pair<LocalTime, LocalTime>> = listOf(
     LocalTime.of(8, 0) to LocalTime.of(8, 45),

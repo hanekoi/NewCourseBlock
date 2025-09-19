@@ -8,8 +8,6 @@ import org.hanekoi.newcourseblock.utils.getTodayDate
 import org.hanekoi.newcourseblock.utils.getWeekDates
 
 object LocalCoursesDataProvider {
-
-
     val testCourses: List<Course> = listOf(
         Course(
             name = "高等数学",
@@ -83,6 +81,6 @@ object LocalCoursesDataProvider {
         courses = testCourses,
         rows = 14,
         currentWeek = 10,
-        today = getTodayDate()
+        todayDate = getTodayDate()
     )
 }

@@ -1,5 +1,6 @@
 package org.hanekoi.newcourseblock.ui.viewmodel
 
+import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,13 +12,10 @@ data class DayUiState(
     val courses: List<Course>,
     val rows: Int,
     val currentWeek: Int,
-    val today: LocalDate
+    val todayDate: LocalDate
 )
 
-
-class DayViewModel {
-    val today: LocalDate = LocalDate.now()
-
+class DayViewModel: ViewModel() {
     private val _uiState = MutableStateFlow( // 用于修改
         LocalCoursesDataProvider.defaultDayUiState
     )

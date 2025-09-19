@@ -20,6 +20,9 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -32,26 +35,45 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.hanekoi.newcourseblock.R
+import org.hanekoi.newcourseblock.data.Course
+import org.hanekoi.newcourseblock.ui.component.ScreenCourseDetail
 import org.hanekoi.newcourseblock.ui.navigation.NavDestination
 import org.hanekoi.newcourseblock.ui.screen.DayScreen
 import org.hanekoi.newcourseblock.ui.screen.MeScreen
 import org.hanekoi.newcourseblock.ui.screen.WeekScreen
 import org.hanekoi.newcourseblock.ui.theme.NewCourseBlockTheme
+import org.hanekoi.newcourseblock.ui.viewmodel.DayUiState
+import org.hanekoi.newcourseblock.ui.viewmodel.DayViewModel
 import org.hanekoi.newcourseblock.ui.viewmodel.WeekViewModel
+import org.hanekoi.newcourseblock.utils.getFormattedDate
 
 @Composable
 fun NewCourseBlockApp(
     modifier: Modifier = Modifier
 ) {
-    val weekViewModel: WeekViewModel = viewModel()
+    val weekViewModel: WeekViewModel = viewModel<WeekViewModel>()
     val weekUiState by weekViewModel.uiState.collectAsState()
+    val dayViewModel: DayViewModel = viewModel<DayViewModel>()
+    val dayUiState by dayViewModel.uiState.collectAsState()
 
     val navController = rememberNavController()
+
+    var selectedCourse by remember { mutableStateOf<Course?>(null) } // 记录目前正被长按选中的卡片
+    val onLongPress: (Course) -> Unit = { it -> selectedCourse = it }
+
+    selectedCourse?.let {
+        ScreenCourseDetail(
+            course = it,
+            onDismissRequest = { selectedCourse = null }
+        )
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            NewCourseBlockAppTopBar()
+            NewCourseBlockAppTopBar(
+                dayUiState
+            )
         },
         bottomBar = {
             NewCourseBlockAppBottomBar(
@@ -67,12 +89,17 @@ fun NewCourseBlockApp(
                 .padding(innerPadding)
         ) {
             composable(route = NavDestination.Day.name) {
-                DayScreen()
+                DayScreen(
+                    uiState = dayUiState,
+                    onLongPress = onLongPress,
+                    modifier = Modifier
+                )
             }
 
             composable(route = NavDestination.Week.name) {
                 WeekScreen(
                     uiState = weekUiState,
+                    onLongPress = onLongPress,
                     modifier = Modifier // 这里不需要再次传递 innerPadding
                 )
             }
@@ -90,6 +117,7 @@ fun NewCourseBlockApp(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun NewCourseBlockAppTopBar(
+    dayUiState: DayUiState,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
@@ -100,7 +128,9 @@ private fun NewCourseBlockAppTopBar(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = stringResource(R.string.app_name)
+                    text =
+                        // TODO: 中文适配
+                        "${dayUiState.todayDate.getFormattedDate()} | Week ${dayUiState.currentWeek}"
                 )
                 IconButton( // 添加新课程按钮
                     onClick = {}
