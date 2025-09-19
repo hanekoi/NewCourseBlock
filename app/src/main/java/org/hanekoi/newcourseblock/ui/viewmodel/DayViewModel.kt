@@ -4,8 +4,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
-import org.hanekoi.newcourseblock.ui.uistate.DayUiState
 import java.time.LocalDate
+import org.hanekoi.newcourseblock.data.Course
+
+data class DayUiState(
+    val courses: List<Course>,
+    val rows: Int,
+    val currentWeek: Int,
+    val today: LocalDate
+)
+
 
 class DayViewModel {
     val today: LocalDate = LocalDate.now()

@@ -42,17 +42,20 @@ import androidx.compose.ui.unit.dp
 import org.hanekoi.newcourseblock.R
 import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
-import org.hanekoi.newcourseblock.ui.uistate.WeekUiState
+import org.hanekoi.newcourseblock.ui.viewmodel.WeekUiState
 import org.hanekoi.newcourseblock.utils.getFormattedTime
 import org.hanekoi.newcourseblock.utils.periods
 import java.time.LocalDate
 
+/**
+ * 周视图布局
+ */
 @Composable
 fun WeekScreen(
     uiState: WeekUiState,
     modifier: Modifier = Modifier
 ) {
-    val screenHeight: Dp = LocalConfiguration.current.screenHeightDp.dp
+    val screenHeight: Dp = LocalConfiguration.current.screenHeightDp.dp // 获取当前屏幕高度
 
     Column(
         modifier = modifier.fillMaxSize()
@@ -72,7 +75,7 @@ fun WeekScreen(
                 rows = uiState.rows
             )
 
-            BoxWithConstraints(
+            BoxWithConstraints( // 课表网格分层绘制
                 modifier = Modifier
             ) {
                 WeekScreenBackground(
@@ -99,8 +102,8 @@ fun WeekScreen(
     }
 }
 
-/*
-    日期顶栏实现
+/**
+    * 周视图日期顶栏
  */
 @Composable
 private fun WeekScreenTopBar(
@@ -118,7 +121,7 @@ private fun WeekScreenTopBar(
     ) {
         val days = stringArrayResource(R.array.week_days)
 
-        Box( // TODO: 显示周数
+        Box(
             modifier = Modifier
                 // TODO: 动态确定宽度
                 .width(40.dp) // 固定宽度以和侧栏匹配
@@ -126,13 +129,14 @@ private fun WeekScreenTopBar(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = currentWeek.toString(),
+                text = currentWeek.toString(), // 显示当前周数
                 style = MaterialTheme.typography.titleLarge
             )
         }
+
         // TODO: 不显示周末
         for(i in 0 until columns) {
-            val isToday = todayDate == weekDates[i]
+            val isToday = todayDate == weekDates[i] // 判断是否为今天以确定是否高亮
             val backgroundColor = if (isToday) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
             val textColor = if (isToday) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground
             Column(
@@ -158,15 +162,14 @@ private fun WeekScreenTopBar(
     }
 }
 
-/*
-    时间侧栏实现
+/**
+    * 周视图时间侧栏
  */
 @Composable
 private fun WeekScreenSideBar(
     rows: Int,
     modifier: Modifier = Modifier
 ) {
-    val times = stringArrayResource(R.array.course_times)
     Column(
         modifier = modifier
             .width(40.dp)
@@ -200,8 +203,8 @@ private fun WeekScreenSideBar(
     }
 }
 
-/*
-    背景颜色实现
+/**
+    * 课表绘制底层 颜色
  */
 @Composable
 private fun WeekScreenBackground(
@@ -215,8 +218,8 @@ private fun WeekScreenBackground(
     )
 }
 
-/*
-    课表网格实现
+/**
+    * 课表绘制中层 网格
  */
 @Composable
 private fun WeekScreenGrid(
@@ -263,10 +266,9 @@ private fun WeekScreenGrid(
     }
 }
 
-/*
-    课表课程实现
+/**
+    * 课表绘制顶层 课程卡片
  */
-
 @Composable
 private fun WeekScreenCourseCard(
     name: String,
@@ -275,7 +277,7 @@ private fun WeekScreenCourseCard(
 ) {
     Card(
         modifier = modifier.padding(2.dp),
-        colors = CardDefaults.cardColors(containerColor = colorFromCourseName(name))
+        colors = CardDefaults.cardColors(containerColor = courseCardColor(name))
     ) {
         Column(
             modifier = Modifier
@@ -295,10 +297,10 @@ private fun WeekScreenCourseCard(
     }
 }
 
-/*
-    为每个卡片生成独特的颜色
+/**
+    * 课程卡片颜色生成
  */
-private fun colorFromCourseName(name: String): Color {
+private fun courseCardColor(name: String): Color {
     val hash = name.hashCode()
     val r = (hash shr 16 and 0xFF)
     val g = (hash shr 8 and 0xFF)
@@ -359,8 +361,8 @@ private fun WeekScreenCourses(
     }
 }
 
-/*
-    课程详细信息弹窗
+/**
+    * 课程详细信息半屏弹窗
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

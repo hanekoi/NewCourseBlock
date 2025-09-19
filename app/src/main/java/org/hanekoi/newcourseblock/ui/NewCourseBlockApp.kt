@@ -25,19 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import org.hanekoi.newcourseblock.R
-import org.hanekoi.newcourseblock.ui.screen.WeekScreen
-import org.hanekoi.newcourseblock.ui.theme.NewCourseBlockTheme
-import org.hanekoi.newcourseblock.ui.viewmodel.WeekViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.hanekoi.newcourseblock.R
 import org.hanekoi.newcourseblock.ui.navigation.NavDestination
 import org.hanekoi.newcourseblock.ui.screen.DayScreen
 import org.hanekoi.newcourseblock.ui.screen.MeScreen
+import org.hanekoi.newcourseblock.ui.screen.WeekScreen
+import org.hanekoi.newcourseblock.ui.theme.NewCourseBlockTheme
+import org.hanekoi.newcourseblock.ui.viewmodel.WeekViewModel
 
 @Composable
 fun NewCourseBlockApp(
@@ -73,7 +73,7 @@ fun NewCourseBlockApp(
             composable(route = NavDestination.Week.name) {
                 WeekScreen(
                     uiState = weekUiState,
-                    modifier = Modifier // no innerPadding
+                    modifier = Modifier // 这里不需要再次传递 innerPadding
                 )
             }
 
@@ -84,8 +84,8 @@ fun NewCourseBlockApp(
     }
 }
 
-/*
-    顶部状态栏实现
+/**
+    * App顶栏
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,14 +95,14 @@ private fun NewCourseBlockAppTopBar(
     TopAppBar(
         title = {
             Row(
-                modifier = Modifier.fillMaxSize(),
+                modifier = modifier.fillMaxSize(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     text = stringResource(R.string.app_name)
                 )
-                IconButton(
+                IconButton( // 添加新课程按钮
                     onClick = {}
                 ) {
                     Icon(
@@ -115,8 +115,8 @@ private fun NewCourseBlockAppTopBar(
     )
 }
 
-/*
-    底部导航栏实现
+/**
+    * App底部导航栏
  */
 private data class NavigationItemContent(
     val icon: ImageVector,

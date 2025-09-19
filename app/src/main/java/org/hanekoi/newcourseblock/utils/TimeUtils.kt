@@ -1,8 +1,18 @@
 package org.hanekoi.newcourseblock.utils
 
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+
+val getTodayDate:() -> LocalDate = { LocalDate.now() }
+
+val getWeekDates:() -> List<LocalDate> = {
+    run {
+    val monday = getTodayDate().with(DayOfWeek.MONDAY)
+    (0..6).map { monday.plusDays(it.toLong()) }
+    }
+}
 
 fun LocalTime.getFormattedTime():String =
     format(DateTimeFormatter.ofPattern("HH:mm"))

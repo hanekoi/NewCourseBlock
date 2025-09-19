@@ -2,10 +2,10 @@ package org.hanekoi.newcourseblock.data.local
 
 import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.CourseTime
-import org.hanekoi.newcourseblock.ui.uistate.DayUiState
-import org.hanekoi.newcourseblock.ui.uistate.WeekUiState
-import java.time.DayOfWeek
-import java.time.LocalDate
+import org.hanekoi.newcourseblock.ui.viewmodel.DayUiState
+import org.hanekoi.newcourseblock.ui.viewmodel.WeekUiState
+import org.hanekoi.newcourseblock.utils.getTodayDate
+import org.hanekoi.newcourseblock.utils.getWeekDates
 
 object LocalCoursesDataProvider {
 
@@ -70,25 +70,19 @@ object LocalCoursesDataProvider {
         )
     )
 
-    val today: LocalDate = LocalDate.now()
-    val weekDates: List<LocalDate> = run {
-        val monday = today.with(DayOfWeek.MONDAY)
-        (0..6).map { monday.plusDays(it.toLong()) }
-    }
-
     val defaultWeekUiState = WeekUiState(
         courses = testCourses,
         columns = 7,
         rows = 14,
         currentWeek = 10,
-        todayDate = today,
-        weekDates = weekDates
+        todayDate = getTodayDate(),
+        weekDates = getWeekDates()
     )
 
     val defaultDayUiState = DayUiState(
         courses = testCourses,
         rows = 14,
         currentWeek = 10,
-        today = today
+        today = getTodayDate()
     )
 }

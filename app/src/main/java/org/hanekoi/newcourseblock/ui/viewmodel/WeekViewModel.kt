@@ -4,18 +4,19 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
-import org.hanekoi.newcourseblock.ui.uistate.WeekUiState
-import java.time.DayOfWeek
 import java.time.LocalDate
 
+data class WeekUiState(
+    val courses: List<Course>,
+    val columns: Int,
+    val rows: Int,
+    val currentWeek: Int,
+    val todayDate: LocalDate,
+    val weekDates: List<LocalDate>
+)
 class WeekViewModel: ViewModel() {
-    val today: LocalDate = LocalDate.now()
-    val weekDates: List<LocalDate> = run {
-        val monday = today.with(DayOfWeek.MONDAY)
-        (0..6).map { monday.plusDays(it.toLong()) }
-    }
-
     private val _uiState = MutableStateFlow( // 用于修改
         LocalCoursesDataProvider.defaultWeekUiState
     )
