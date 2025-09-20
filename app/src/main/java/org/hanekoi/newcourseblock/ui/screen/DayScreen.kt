@@ -57,6 +57,7 @@ fun DayScreen(
 ) {
     Row(
         modifier = modifier
+            .animateContentSize()
             .fillMaxSize()
     ) {
         DayScreenSideBar()

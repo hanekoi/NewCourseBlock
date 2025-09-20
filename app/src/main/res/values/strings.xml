@@ -8,6 +8,9 @@
     <string name="about">About</string>
     <string name="sync">Sync</string>
     <string name="current_academic_year">Current Academic Year</string>
+    <string name="current_term">Current Term</string>
+    <string name="first_day_of_the_term">First Day of The Term</string>
+    <string name="show_weekend">Show Weekend</string>
 
     <string-array name="week_days">
         <item>Mon</item>

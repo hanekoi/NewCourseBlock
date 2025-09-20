@@ -1,5 +1,10 @@
 package org.hanekoi.newcourseblock.ui
 
+import android.transition.Fade
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -44,7 +49,7 @@ import org.hanekoi.newcourseblock.ui.viewmodel.DayViewModel
 import org.hanekoi.newcourseblock.ui.viewmodel.MeViewModel
 import org.hanekoi.newcourseblock.ui.viewmodel.WeekViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun NewCourseBlockApp(
     modifier: Modifier = Modifier
@@ -94,7 +99,9 @@ fun NewCourseBlockApp(
         NavHost(
             navController = navController,
             startDestination = NavDestination.Week.name,
-            modifier = Modifier
+            enterTransition = { fadeIn(animationSpec = tween(300)) },
+            exitTransition = { fadeOut(animationSpec = tween(300)) },
+                    modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {

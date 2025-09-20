@@ -33,6 +33,7 @@ fun MeScreen(
 ) {
     Column(
         modifier = modifier
+            .animateContentSize()
             .fillMaxWidth()
             .padding(16.dp)
     ) {
