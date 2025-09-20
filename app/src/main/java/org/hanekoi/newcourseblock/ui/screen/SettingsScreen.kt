@@ -25,55 +25,65 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import org.hanekoi.newcourseblock.R
+import org.hanekoi.newcourseblock.ui.component.BackTopBar
 
 @Composable
 fun SettingsScreen(
+    onBackButtonClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier
-            .animateContentSize()
-            .fillMaxWidth(),
-    ) {
-        item {
-            Text("Course")
-            HorizontalDivider()
+        .fillMaxWidth(),
+    ){
+        BackTopBar(
+            title = stringResource(R.string.settings),
+            onClick = onBackButtonClicked
+        )
+        LazyColumn(
+            modifier = modifier
+                .fillMaxWidth(),
+        ) {
+            item {
+                Text("Course")
+                HorizontalDivider()
 
-            SettingScreenClickableSurface(
-                text = stringResource(R.string.current_academic_year),
-                description = "2024-2045",
-                onClick = {},
-            )
+                SettingScreenClickableSurface(
+                    text = stringResource(R.string.current_academic_year),
+                    description = "2024-2045",
+                    onClick = {},
+                )
 
-            HorizontalDivider()
+                HorizontalDivider()
 
-            SettingScreenClickableSurface(
-                text = stringResource(R.string.current_term),
-                description = "2",
-                onClick = {},
-            )
+                SettingScreenClickableSurface(
+                    text = stringResource(R.string.current_term),
+                    description = "2",
+                    onClick = {},
+                )
 
-            HorizontalDivider()
+                HorizontalDivider()
 
-            SettingScreenClickableSurface(
-                text = stringResource(R.string.first_day_of_the_term),
-                description = "2025-3-1",
-                onClick = {},
-            )
+                SettingScreenClickableSurface(
+                    text = stringResource(R.string.first_day_of_the_term),
+                    description = "2025-3-1",
+                    onClick = {},
+                )
 
-            HorizontalDivider()
+                HorizontalDivider()
 
-            Spacer(modifier.height(40.dp))
+                Spacer(modifier.height(40.dp))
 
-            Text("Display")
-            HorizontalDivider()
+                Text("Display")
+                HorizontalDivider()
 
-            SettingScreenSwitchSurface(
-                text = stringResource(R.string.show_weekend)
-            )
+                SettingScreenSwitchSurface(
+                    text = stringResource(R.string.show_weekend)
+                )
 
-            HorizontalDivider()
+                HorizontalDivider()
 
+            }
         }
     }
 }

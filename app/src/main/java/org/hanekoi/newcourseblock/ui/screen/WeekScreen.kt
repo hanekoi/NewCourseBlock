@@ -1,7 +1,6 @@
 package org.hanekoi.newcourseblock.ui.screen
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -37,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import org.hanekoi.newcourseblock.R
 import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
-import org.hanekoi.newcourseblock.ui.component.ScreenBackground
 import org.hanekoi.newcourseblock.ui.theme.Shape
 import org.hanekoi.newcourseblock.ui.theme.courseCardColor
 import org.hanekoi.newcourseblock.ui.viewmodel.WeekUiState
@@ -60,6 +58,7 @@ fun WeekScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
         WeekScreenTopBar(
             todayDate = uiState.todayDate,
@@ -78,10 +77,6 @@ fun WeekScreen(
             BoxWithConstraints( // 课表网格分层绘制
                 modifier = Modifier
             ) {
-                ScreenBackground(
-                    color = MaterialTheme.colorScheme.background
-                )
-
                 WeekScreenGrid(
                     columns = uiState.columns,
                     rows = uiState.rows,

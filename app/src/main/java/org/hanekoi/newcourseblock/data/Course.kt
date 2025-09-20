@@ -2,7 +2,6 @@ package org.hanekoi.newcourseblock.data
 
 import org.hanekoi.newcourseblock.utils.periods
 
-// TODO: Course 类整体实现有问题, 需修改
 data class CourseTime(
     val day: Int, // 星期几
     val start: Int, // 起始节次

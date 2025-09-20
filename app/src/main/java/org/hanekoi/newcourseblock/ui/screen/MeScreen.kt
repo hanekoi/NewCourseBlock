@@ -1,6 +1,5 @@
 package org.hanekoi.newcourseblock.ui.screen
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,8 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import org.hanekoi.newcourseblock.R
+import org.hanekoi.newcourseblock.data.MainScreenType
 import org.hanekoi.newcourseblock.ui.component.ClickableCard
-import org.hanekoi.newcourseblock.ui.navigation.NavDestination
 import org.hanekoi.newcourseblock.ui.viewmodel.MeUiState
 
 @Composable
@@ -33,7 +32,6 @@ fun MeScreen(
 ) {
     Column(
         modifier = modifier
-            .animateContentSize()
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -50,7 +48,7 @@ fun MeScreen(
         ClickableCard(
             icon = Icons.Default.Settings,
             text = stringResource(R.string.settings),
-            onClick = { navController.navigate(NavDestination.Settings.name) }
+            onClick = { navController.navigate(MainScreenType.Setting.name) }
         )
 
         ClickableCard(

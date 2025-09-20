@@ -1,8 +1,8 @@
 package org.hanekoi.newcourseblock.ui.screen
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.CourseTime
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
-import org.hanekoi.newcourseblock.ui.component.ScreenBackground
 import org.hanekoi.newcourseblock.ui.theme.NewCourseBlockTheme
 import org.hanekoi.newcourseblock.ui.theme.Shape
 import org.hanekoi.newcourseblock.ui.theme.courseCardColor
@@ -57,16 +56,12 @@ fun DayScreen(
 ) {
     Row(
         modifier = modifier
-            .animateContentSize()
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) {
         DayScreenSideBar()
 
         BoxWithConstraints {
-            ScreenBackground(
-                color = MaterialTheme.colorScheme.background
-            )
-
             DayScreenGrid(
                 width = maxWidth,
                 height = maxHeight,
@@ -111,7 +106,6 @@ private fun DayScreenSideBar(
             }
         }
     }
-
 }
 
 /**
@@ -240,18 +234,5 @@ private fun DayScreenCourses(
                 }
             }
         }
-    }
-}
-
-@Preview(
-    showBackground = true
-)
-@Composable
-fun DayScreenPreview() {
-    NewCourseBlockTheme {
-        DayScreen(
-            uiState = LocalCoursesDataProvider.defaultDayUiState,
-            onLongPress = {},
-        )
     }
 }

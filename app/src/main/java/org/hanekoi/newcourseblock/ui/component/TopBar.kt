@@ -24,7 +24,7 @@ import org.hanekoi.newcourseblock.utils.getFormattedDate
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DayAndWeekTopBar(
+internal fun DayAndWeekTopBar(
     dayUiState: DayUiState,
     modifier: Modifier = Modifier
 ) {
@@ -55,7 +55,7 @@ fun DayAndWeekTopBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MeTopBar() {
+internal fun MeTopBar() {
     TopAppBar(
         title = {
             Text(
@@ -67,7 +67,7 @@ fun MeTopBar() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BackTopBar(
+internal fun BackTopBar(
     title: String,
     onClick: () -> Unit
 ) {
