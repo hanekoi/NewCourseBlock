@@ -1,6 +1,7 @@
 package org.hanekoi.newcourseblock.ui.screen
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -58,9 +59,7 @@ fun DayScreen(
         modifier = modifier
             .fillMaxSize()
     ) {
-        DayScreenSideBar(
-            uiState.rows
-        )
+        DayScreenSideBar()
 
         BoxWithConstraints {
             ScreenBackground(
@@ -87,7 +86,6 @@ fun DayScreen(
  */
 @Composable
 private fun DayScreenSideBar(
-    rows: Int,
     modifier: Modifier = Modifier
 ) {
     val hours = (8..22).toList()

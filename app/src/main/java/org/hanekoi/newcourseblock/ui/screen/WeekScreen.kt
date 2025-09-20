@@ -1,5 +1,7 @@
 package org.hanekoi.newcourseblock.ui.screen
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -22,10 +24,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,15 +32,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringArrayResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.hanekoi.newcourseblock.R
 import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.local.LocalCoursesDataProvider
 import org.hanekoi.newcourseblock.ui.component.ScreenBackground
-import org.hanekoi.newcourseblock.ui.component.ScreenCourseDetail
-import org.hanekoi.newcourseblock.ui.theme.NewCourseBlockTheme
 import org.hanekoi.newcourseblock.ui.theme.Shape
 import org.hanekoi.newcourseblock.ui.theme.courseCardColor
 import org.hanekoi.newcourseblock.ui.viewmodel.WeekUiState
@@ -53,6 +48,7 @@ import java.time.LocalDate
 /**
  * 周视图布局
  */
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun WeekScreen(
     uiState: WeekUiState,
@@ -62,7 +58,8 @@ fun WeekScreen(
     val screenHeight: Dp = LocalConfiguration.current.screenHeightDp.dp // 获取当前屏幕高度
 
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
     ) {
         WeekScreenTopBar(
             todayDate = uiState.todayDate,
@@ -260,6 +257,7 @@ private fun WeekScreenCourseCard(
     location: String,
     modifier: Modifier = Modifier // 位置从 modifier 传递
 ) {
+    // TODO: 背景颜色和字体颜色还需要调整
     Card(
         modifier = modifier
             .padding(2.dp)

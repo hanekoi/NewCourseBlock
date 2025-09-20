@@ -2,7 +2,9 @@ package org.hanekoi.newcourseblock.data.local
 
 import org.hanekoi.newcourseblock.data.Course
 import org.hanekoi.newcourseblock.data.CourseTime
+import org.hanekoi.newcourseblock.ui.screen.MeScreen
 import org.hanekoi.newcourseblock.ui.viewmodel.DayUiState
+import org.hanekoi.newcourseblock.ui.viewmodel.MeUiState
 import org.hanekoi.newcourseblock.ui.viewmodel.WeekUiState
 import org.hanekoi.newcourseblock.utils.getTodayDate
 import org.hanekoi.newcourseblock.utils.getWeekDates
@@ -135,5 +137,10 @@ object LocalCoursesDataProvider {
         rows = 14,
         currentWeek = 10,
         todayDate = getTodayDate()
+    )
+
+    val defaultMeUiState = MeUiState(
+        studentName = "锟斤烤",
+        studentId = "123123123123"
     )
 }
